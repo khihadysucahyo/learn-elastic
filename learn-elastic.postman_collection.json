@@ -1,0 +1,364 @@
+{
+	"info": {
+		"_postman_id": "26664523-e6c3-448d-9a0c-2d9529531e88",
+		"name": "learn-elastic",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "create index",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"settings\": {\n    \"index\": {\n      \"number_of_shards\": 5,  \n      \"number_of_replicas\": 2 \n    }\n  }\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:9200/learn-elastic",
+					"host": [
+						"localhost"
+					],
+					"port": "9200",
+					"path": [
+						"learn-elastic"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Index Info",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:9200/:index",
+					"host": [
+						"localhost"
+					],
+					"port": "9200",
+					"path": [
+						":index"
+					],
+					"variable": [
+						{
+							"key": "index",
+							"value": "learn-elastic"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "create doc",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"first_name\": \"sobat\",\n    \"last_name\": \"baygon\",\n    \"address\": {\n        \"country\": \"bhutasn\",\n        \"city\": \"jayapura\"\n    },\n    \"hobbies\": [ \"traveling\", \"gelud\" ]\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:9200/learn-elastic/_doc/5",
+					"host": [
+						"localhost"
+					],
+					"port": "9200",
+					"path": [
+						"learn-elastic",
+						"_doc",
+						"5"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get doc",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:9200/learn-elastic/_doc/3",
+					"host": [
+						"localhost"
+					],
+					"port": "9200",
+					"path": [
+						"learn-elastic",
+						"_doc",
+						"3"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "delete doc",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "localhost:9200/learn-elastic/_doc/2",
+					"host": [
+						"localhost"
+					],
+					"port": "9200",
+					"path": [
+						"learn-elastic",
+						"_doc",
+						"2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "partial update",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"doc\": {\n        \"first_name\": \"sobatzzz\"\n    }\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:9200/learn-elastic/_update/3",
+					"host": [
+						"localhost"
+					],
+					"port": "9200",
+					"path": [
+						"learn-elastic",
+						"_update",
+						"3"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "search",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"query\": {\n        \"match\": {\n            \"hobbies\": \"gelud\"\n        }\n    }\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:9200/learn-elastic/_search",
+					"host": [
+						"localhost"
+					],
+					"port": "9200",
+					"path": [
+						"learn-elastic",
+						"_search"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "search bool must not",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"query\": {\n        \"bool\": {\n            \"must_not\": {\n                \"match\": {\n                    \"first_name\": \"khihady\"\n                }\n            }\n        }\n    }\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:9200/learn-elastic/_search",
+					"host": [
+						"localhost"
+					],
+					"port": "9200",
+					"path": [
+						"learn-elastic",
+						"_search"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "search bool must (&opt_and)",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"query\": {\n        \"bool\": {\n            \"must\": [\n                { \"match\": { \"first_name\": \"khihady\" } },\n                { \"match\": { \"last_name\": \"sucahyo\" } }\n            ]\n        }\n    }\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:9200/learn-elastic/_search",
+					"host": [
+						"localhost"
+					],
+					"port": "9200",
+					"path": [
+						"learn-elastic",
+						"_search"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "search bool should (&opt_or)",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"query\": {\n        \"bool\": {\n            \"should\": [\n                { \"match\": { \"first_name\": \"khihady\" } },\n                { \"match\": { \"last_name\": \"sucahyso\" } }\n            ]\n        }\n    }\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:9200/learn-elastic/_search",
+					"host": [
+						"localhost"
+					],
+					"port": "9200",
+					"path": [
+						"learn-elastic",
+						"_search"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "search bool combination",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"query\": {\n        \"bool\": {\n            \"must\": {\n                \"match\": { \"address.country\": \"indonesia\" }\n            },\n            \"should\": [\n                { \"match\": { \"first_name\": \"khihady\" } },\n                { \"match\": { \"last_name\": \"sucahyso\" } }\n            ],\n            \"must_not\": {\n                \"match\": { \"address.country\": \"argentina\" }\n            }\n        }\n    }\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:9200/learn-elastic/_search",
+					"host": [
+						"localhost"
+					],
+					"port": "9200",
+					"path": [
+						"learn-elastic",
+						"_search"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "search aggs",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"query\": {\n        \"bool\": {\n            \"must\": []\n        }\n    },\n    \"aggs\": {\n        \"agg_hobbies\": {\n            \"terms\": {\n                \"field\": \"hobbies.keyword\"\n            }\n        },\n        \"agg_countries\": {\n            \"terms\": {\n                \"field\": \"address.country.keyword\"\n            }\n        }\n    }\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:9200/learn-elastic/_search",
+					"host": [
+						"localhost"
+					],
+					"port": "9200",
+					"path": [
+						"learn-elastic",
+						"_search"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "cluster health",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:9200/_cluster/health",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9200",
+					"path": [
+						"_cluster",
+						"health"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
